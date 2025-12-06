@@ -1,0 +1,226 @@
+<!-- Main Layout Container -->
+<div class="min-h-screen bg-gray-50 flex">
+  <!-- Sidebar for desktop -->
+  <aside class="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 lg:border-r lg:border-gray-200 lg:bg-white lg:shadow-sm">
+    <div class="flex flex-col flex-1 min-h-0">
+      <!-- Sidebar Header -->
+      <div class="flex items-center h-16 flex-shrink-0 px-6 border-b border-gray-200">
+        <div class="flex items-center space-x-3">
+          <!-- Logo -->
+          <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">O</span>
+          </div>
+          <!-- Brand -->
+          <div>
+            <h1 class="text-xl font-bold text-gray-900">Optera</h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tenant Info -->
+      <div *ngIf="currentTenant" class="px-6 py-3 border-b border-gray-200 bg-gray-50">
+        <div class="flex items-center space-x-3">
+          <div class="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded text-white flex items-center justify-center text-xs font-bold">
+            {{ getTenantInitials() }}
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">{{ currentTenant.name }}</p>
+            <p class="text-xs text-gray-500">{{ currentTenant.isActive ? 'Active' : 'Inactive' }}</p>
+          </div>
+          <button
+            (click)="switchTenant()"
+            class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+            title="Switch Workspace"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+        <div
+          *ngFor="let item of navigationItems"
+          (click)="navigateTo(item.route)"
+          class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg cursor-pointer transition-colors"
+          [class]="isActiveRoute(item.route) 
+            ? 'bg-blue-50 border-r-2 border-blue-500 text-blue-700' 
+            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+        >
+          <span 
+            [innerHTML]="getIcon(item.icon)"
+            [class]="isActiveRoute(item.route) ? 'text-blue-500' : 'text-gray-400 group-hover:text-gray-500'"
+            class="mr-3 flex-shrink-0"
+          ></span>
+          <span class="flex-1">{{ item.name }}</span>
+        </div>
+      </nav>
+
+      <!-- User Profile Section -->
+      <div class="flex-shrink-0 border-t border-gray-200 p-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+            {{ getUserInitials() }}
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">
+              {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+            </p>
+            <p class="text-xs text-gray-500 truncate">{{ currentUser?.email }}</p>
+          </div>
+          <div class="flex-shrink-0">
+            <button
+              (click)="logout()"
+              class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              title="Sign Out"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile sidebar overlay -->
+  <div 
+    *ngIf="sidebarOpen()" 
+    class="fixed inset-0 z-40 lg:hidden"
+    (click)="closeSidebar()"
+  >
+    <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
+  </div>
+
+  <!-- Mobile sidebar -->
+  <aside 
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden"
+    [class]="sidebarOpen() ? 'translate-x-0' : '-translate-x-full'"
+  >
+    <div class="flex flex-col flex-1 min-h-0">
+      <!-- Mobile Sidebar Header -->
+      <div class="flex items-center justify-between h-16 flex-shrink-0 px-6 border-b border-gray-200">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">O</span>
+          </div>
+          <h1 class="text-xl font-bold text-gray-900">Optera</h1>
+        </div>
+        <button
+          (click)="closeSidebar()"
+          class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Tenant Info -->
+      <div *ngIf="currentTenant" class="px-6 py-3 border-b border-gray-200 bg-gray-50">
+        <div class="flex items-center space-x-3">
+          <div class="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded text-white flex items-center justify-center text-xs font-bold">
+            {{ getTenantInitials() }}
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">{{ currentTenant.name }}</p>
+            <p class="text-xs text-gray-500">{{ currentTenant.isActive ? 'Active' : 'Inactive' }}</p>
+          </div>
+          <button
+            (click)="switchTenant()"
+            class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+        <div
+          *ngFor="let item of navigationItems"
+          (click)="navigateTo(item.route)"
+          class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg cursor-pointer transition-colors"
+          [class]="isActiveRoute(item.route) 
+            ? 'bg-blue-50 border-r-2 border-blue-500 text-blue-700' 
+            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+        >
+          <span 
+            [innerHTML]="getIcon(item.icon)"
+            [class]="isActiveRoute(item.route) ? 'text-blue-500' : 'text-gray-400 group-hover:text-gray-500'"
+            class="mr-3 flex-shrink-0"
+          ></span>
+          <span class="flex-1">{{ item.name }}</span>
+        </div>
+      </nav>
+
+      <!-- Mobile User Profile Section -->
+      <div class="flex-shrink-0 border-t border-gray-200 p-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+            {{ getUserInitials() }}
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">
+              {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+            </p>
+            <p class="text-xs text-gray-500 truncate">{{ currentUser?.email }}</p>
+          </div>
+          <button
+            (click)="logout()"
+            class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex flex-col flex-1 lg:pl-64">
+    <!-- Top Header -->
+    <header class="bg-white shadow border-b border-gray-200 lg:hidden">
+      <div class="px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Mobile menu button -->
+          <button
+            (click)="toggleSidebar()"
+            class="p-2 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+
+          <!-- Mobile Header Title -->
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <span class="text-white font-bold text-sm">O</span>
+            </div>
+            <h1 class="text-xl font-bold text-gray-900">Optera</h1>
+          </div>
+
+          <!-- Mobile User Menu -->
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+              {{ getUserInitials() }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="flex-1 overflow-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
