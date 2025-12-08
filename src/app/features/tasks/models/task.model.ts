@@ -35,14 +35,14 @@ export enum TaskStatus {
   IN_PROGRESS = 'in_progress',
   IN_REVIEW = 'in_review',
   COMPLETED = 'completed',
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }
 
 export enum TaskPriority {
   LOW = 'low',
   MEDIUM = 'medium',
   HIGH = 'high',
-  CRITICAL = 'critical'
+  CRITICAL = 'critical',
 }
 
 export interface ChecklistItem {
@@ -101,6 +101,7 @@ export interface TaskFilters {
   parentTaskId?: string;
   tags?: string[];
   overdue?: boolean;
+  priority?: any;
 }
 
 export interface PaginationParams {

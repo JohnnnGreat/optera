@@ -1,0 +1,48 @@
+<div class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 max-w-md pointer-events-none">
+  <div *ngFor="let notification of notifications" [@slideIn] [ngClass]="{
+      'border-l-green-500': notification.type === 'success',
+      'border-l-red-500': notification.type === 'error',
+      'border-l-amber-500': notification.type === 'warning',
+      'border-l-blue-500': notification.type === 'info'
+    }"
+    class="flex items-start gap-3 p-4 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border-l-4 cursor-pointer pointer-events-auto transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden group"
+    (click)="removeNotification(notification.id)">
+    <!-- Progress bar -->
+    <div [ngClass]="{
+        'bg-green-500': notification.type === 'success',
+        'bg-red-500': notification.type === 'error',
+        'bg-amber-500': notification.type === 'warning',
+        'bg-blue-500': notification.type === 'info'
+      }" class="absolute bottom-0 left-0 h-1 opacity-30 animate-shrink"
+      [style.animation-duration]="(notification.duration || 5000) + 'ms'"></div>
+
+    <!-- Icon -->
+    <div [ngClass]="{
+        'bg-green-50 text-green-500 dark:bg-green-500/10': notification.type === 'success',
+        'bg-red-50 text-red-500 dark:bg-red-500/10': notification.type === 'error',
+        'bg-amber-50 text-amber-500 dark:bg-amber-500/10': notification.type === 'warning',
+        'bg-blue-50 text-blue-500 dark:bg-blue-500/10': notification.type === 'info'
+      }" class="flex items-center justify-center w-10 h-10 rounded-lg flex-shrink-0 font-semibold text-xl">
+      {{ getIcon(notification.type) }}
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 min-w-0">
+      <h4 class="text-[15px] font-semibold text-gray-900 dark:text-white mb-1 leading-snug">
+        {{ notification.title }}
+      </h4>
+      <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+        {{ notification.message }}
+      </p>
+    </div>
+
+    <!-- Close button -->
+    <button (click)="removeNotification(notification.id); $event.stopPropagation()"
+      class="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors flex-shrink-0"
+      aria-label="Close notification">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>

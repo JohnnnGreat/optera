@@ -163,7 +163,7 @@ export class ProjectListComponent implements OnInit {
     return 'bg-blue-500';
   }
 
-  formatDate(date: string): string {
+  formatDate(date: Date): string {
     return new Date(date).toLocaleDateString();
   }
 

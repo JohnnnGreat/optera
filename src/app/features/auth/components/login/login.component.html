@@ -1,6 +1,7 @@
 <div
-  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 sm:px-6 lg:px-8"
->
+  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 sm:px-6 lg:px-8">
+  <p-toast></p-toast>
+
   <div class="max-w-md w-full space-y-8">
     <!-- Header -->
     <div class="text-center">
@@ -15,119 +16,64 @@
         <!-- Email Field -->
         <div class="space-y-1">
           <div class="relative">
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
+            <input id="email" type="email" formControlName="email"
               class="peer w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors placeholder-transparent"
-              placeholder="Email address"
-              [class.border-red-500]="
+              placeholder="Email address" [class.border-red-500]="
                 loginForm.get('email')?.invalid && loginForm.get('email')?.touched
-              "
-            />
-            <label
-              for="email"
-              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
-            >
+              " />
+            <label for="email"
+              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600">
               Email address
             </label>
           </div>
-          <div
-            *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-            class="text-red-500 text-sm"
-          >
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm">
             <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
-            <span *ngIf="loginForm.get('email')?.errors?.['email']"
-              >Please enter a valid email address</span
-            >
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address</span>
           </div>
         </div>
 
         <!-- Password Field -->
         <div class="space-y-1">
           <div class="relative">
-            <input
-              id="password"
-              [type]="showPassword ? 'text' : 'password'"
-              formControlName="password"
+            <input id="password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
               class="peer w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors placeholder-transparent"
-              placeholder="Password"
-              [class.border-red-500]="
+              placeholder="Password" [class.border-red-500]="
                 loginForm.get('password')?.invalid && loginForm.get('password')?.touched
-              "
-            />
-            <label
-              for="password"
-              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
-            >
+              " />
+            <label for="password"
+              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600">
               Password
             </label>
-            <button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none"
-            >
-              <svg
-                *ngIf="!showPassword"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                ></path>
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                ></path>
+            <button type="button" (click)="togglePasswordVisibility()"
+              class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none">
+              <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                </path>
               </svg>
-              <svg
-                *ngIf="showPassword"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
-                ></path>
+              <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21">
+                </path>
               </svg>
             </button>
           </div>
-          <div
-            *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-            class="text-red-500 text-sm"
-          >
-            <span *ngIf="loginForm.get('password')?.errors?.['required']"
-              >Password is required</span
-            >
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            class="text-red-500 text-sm">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
           </div>
         </div>
 
         <!-- Remember Me & Forgot Password -->
         <div class="flex items-center justify-between">
           <div class="flex items-center">
-            <input
-              id="remember"
-              type="checkbox"
-              formControlName="rememberMe"
-              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
+            <input id="remember" type="checkbox" formControlName="rememberMe"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
             <label for="remember" class="ml-2 block text-sm text-gray-700"> Remember me </label>
           </div>
-          <a
-            routerLink="/forgot-password"
-            class="text-sm text-blue-600 hover:text-blue-800 hover:underline"
-          >
+          <a routerLink="/forgot-password" class="text-sm text-blue-600 hover:text-blue-800 hover:underline">
             Forgot password?
           </a>
         </div>
@@ -143,31 +89,15 @@
         </div>
 
         <!-- Submit Button -->
-        <button
-          type="submit"
-          [disabled]="loginForm.invalid || isLoading"
-          class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          <span *ngIf="!isLoading">Sign in</span>
-          <div *ngIf="isLoading" class="flex items-center">
-            <svg
-              class="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
+        <button type="submit" [disabled]="loginForm.invalid || isLoading()"
+          class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          <span *ngIf="!isLoading()">Sign in</span>
+          <div *ngIf="isLoading()" class="flex items-center">
+            <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
             </svg>
             Signing in...
           </div>
@@ -177,10 +107,7 @@
         <div class="text-center">
           <p class="text-sm text-gray-600">
             Don't have an account?
-            <a
-              routerLink="/register"
-              class="font-medium text-blue-600 hover:text-blue-800 hover:underline"
-            >
+            <a routerLink="/register" class="font-medium text-blue-600 hover:text-blue-800 hover:underline">
               Sign up
             </a>
           </p>

@@ -9,6 +9,7 @@ export interface Project {
   color?: string;
   startDate?: Date;
   dueDate?: Date;
+  endDate?: Date;
   completedAt?: Date;
   progress: number;
   estimatedHours?: number;
@@ -31,14 +32,14 @@ export enum ProjectStatus {
   ACTIVE = 'active',
   ON_HOLD = 'on_hold',
   COMPLETED = 'completed',
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }
 
 export enum ProjectPriority {
   LOW = 'low',
   MEDIUM = 'medium',
   HIGH = 'high',
-  CRITICAL = 'critical'
+  CRITICAL = 'critical',
 }
 
 export interface TaskStats {

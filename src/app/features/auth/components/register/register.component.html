@@ -1,6 +1,5 @@
 <div
-  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 sm:px-6 lg:px-8"
->
+  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
     <!-- Header -->
     <div class="text-center">
@@ -17,343 +16,188 @@
           <!-- First Name -->
           <div class="space-y-1">
             <div class="relative">
-              <input
-                id="firstName"
-                type="text"
-                formControlName="firstName"
+              <input id="firstName" type="text" formControlName="firstName"
                 class="peer w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors placeholder-transparent"
-                placeholder="First name"
-                [class.border-red-500]="
+                placeholder="First name" [class.border-red-500]="
                   registerForm.get('firstName')?.invalid &&
                   registerForm.get('firstName')?.touched
-                "
-              />
-              <label
-                for="firstName"
-                class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
-              >
+                " />
+              <label for="firstName"
+                class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600">
                 First name
               </label>
             </div>
-            <div
-              *ngIf="
-                registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched
-              "
-              class="text-red-500 text-sm"
-            >
-              <span *ngIf="registerForm.get('firstName')?.errors?.['required']"
-                >First name is required</span
-              >
+            @if (firstNameError) {
+            <div class="text-red-500 text-sm">
+              <span>{{ firstNameError }}</span>
             </div>
+            }
           </div>
 
           <!-- Last Name -->
           <div class="space-y-1">
             <div class="relative">
-              <input
-                id="lastName"
-                type="text"
-                formControlName="lastName"
+              <input id="lastName" type="text" formControlName="lastName"
                 class="peer w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors placeholder-transparent"
-                placeholder="Last name"
-                [class.border-red-500]="
+                placeholder="Last name" [class.border-red-500]="
                   registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched
-                "
-              />
-              <label
-                for="lastName"
-                class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
-              >
+                " />
+              <label for="lastName"
+                class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600">
                 Last name
               </label>
             </div>
-            <div
-              *ngIf="
-                registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched
-              "
-              class="text-red-500 text-sm"
-            >
-              <span *ngIf="registerForm.get('lastName')?.errors?.['required']"
-                >Last name is required</span
-              >
+            @if (lastNameError) {
+            <div class="text-red-500 text-sm">
+              <span>{{ lastNameError }}</span>
             </div>
+            }
           </div>
         </div>
 
         <!-- Email Field -->
         <div class="space-y-1">
           <div class="relative">
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
+            <input id="email" type="email" formControlName="email"
               class="peer w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors placeholder-transparent"
-              placeholder="Email address"
-              [class.border-red-500]="
+              placeholder="Email address" [class.border-red-500]="
                 registerForm.get('email')?.invalid && registerForm.get('email')?.touched
-              "
-            />
-            <label
-              for="email"
-              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
-            >
+              " />
+            <label for="email"
+              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600">
               Email address
             </label>
           </div>
-          <div
-            *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
-            class="text-red-500 text-sm"
-          >
-            <span *ngIf="registerForm.get('email')?.errors?.['required']"
-              >Email is required</span
-            >
-            <span *ngIf="registerForm.get('email')?.errors?.['email']"
-              >Please enter a valid email address</span
-            >
+          @if (emailError) {
+          <div class="text-red-500 text-sm">
+            <span>{{ emailError }}</span>
           </div>
+          }
         </div>
 
         <!-- Password Field -->
         <div class="space-y-1">
           <div class="relative">
-            <input
-              id="password"
-              [type]="showPassword ? 'text' : 'password'"
-              formControlName="password"
+            <input id="password" [type]="showPassword() ? 'text' : 'password'" formControlName="password"
               class="peer w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors placeholder-transparent"
-              placeholder="Password"
-              [class.border-red-500]="
+              placeholder="Password" [class.border-red-500]="
                 registerForm.get('password')?.invalid && registerForm.get('password')?.touched
-              "
-            />
-            <label
-              for="password"
-              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
-            >
+              " />
+            <label for="password"
+              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600">
               Password
             </label>
-            <button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none"
-            >
-              <svg
-                *ngIf="!showPassword"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                ></path>
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                ></path>
+            <button type="button" (click)="togglePasswordVisibility()"
+              class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none">
+              @if (!showPassword()) {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                </path>
               </svg>
-              <svg
-                *ngIf="showPassword"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
-                ></path>
+              } @else {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21">
+                </path>
               </svg>
+              }
             </button>
           </div>
-          <div
-            *ngIf="
-              registerForm.get('password')?.invalid && registerForm.get('password')?.touched
-            "
-            class="text-red-500 text-sm"
-          >
-            <span *ngIf="registerForm.get('password')?.errors?.['required']"
-              >Password is required</span
-            >
-            <span *ngIf="registerForm.get('password')?.errors?.['minlength']"
-              >Password must be at least 8 characters</span
-            >
+          @if (passwordError) {
+          <div class="text-red-500 text-sm">
+            <span>{{ passwordError }}</span>
           </div>
+          }
         </div>
 
         <!-- Confirm Password Field -->
         <div class="space-y-1">
           <div class="relative">
-            <input
-              id="confirmPassword"
-              [type]="showConfirmPassword ? 'text' : 'password'"
+            <input id="confirmPassword" [type]="showConfirmPassword() ? 'text' : 'password'"
               formControlName="confirmPassword"
               class="peer w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors placeholder-transparent"
-              placeholder="Confirm password"
-              [class.border-red-500]="
+              placeholder="Confirm password" [class.border-red-500]="
                 registerForm.get('confirmPassword')?.invalid &&
                 registerForm.get('confirmPassword')?.touched
-              "
-            />
-            <label
-              for="confirmPassword"
-              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
-            >
+              " />
+            <label for="confirmPassword"
+              class="absolute left-4 -top-2.5 bg-white px-1 text-sm font-medium text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600">
               Confirm password
             </label>
-            <button
-              type="button"
-              (click)="toggleConfirmPasswordVisibility()"
-              class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none"
-            >
-              <svg
-                *ngIf="!showConfirmPassword"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                ></path>
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                ></path>
+            <button type="button" (click)="toggleConfirmPasswordVisibility()"
+              class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none">
+              @if (!showConfirmPassword()) {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                </path>
               </svg>
-              <svg
-                *ngIf="showConfirmPassword"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
-                ></path>
+              } @else {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21">
+                </path>
               </svg>
+              }
             </button>
           </div>
-          <div
-            *ngIf="
-              registerForm.get('confirmPassword')?.invalid &&
-              registerForm.get('confirmPassword')?.touched
-            "
-            class="text-red-500 text-sm"
-          >
-            <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
-              >Please confirm your password</span
-            >
-            <span
-              *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched"
-              >Passwords do not match</span
-            >
+          @if (confirmPasswordError) {
+          <div class="text-red-500 text-sm">
+            <span>{{ confirmPasswordError }}</span>
           </div>
+          }
         </div>
 
         <!-- Terms Checkbox -->
         <div class="space-y-1">
           <div class="flex items-start">
-            <input
-              id="acceptedTerms"
-              type="checkbox"
-              formControlName="acceptedTerms"
-              class="h-4 w-4 mt-1 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              [class.border-red-500]="
+            <input id="acceptedTerms" type="checkbox" formControlName="acceptedTerms"
+              class="h-4 w-4 mt-1 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" [class.border-red-500]="
                 registerForm.get('acceptedTerms')?.invalid &&
                 registerForm.get('acceptedTerms')?.touched
-              "
-            />
+              " />
             <label for="acceptedTerms" class="ml-2 block text-sm text-gray-700">
               I agree to the
-              <a href="#" class="text-blue-600 hover:text-blue-800 hover:underline"
-                >Terms of Service</a
-              >
+              <a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">Terms of Service</a>
               and
-              <a href="#" class="text-blue-600 hover:text-blue-800 hover:underline"
-                >Privacy Policy</a
-              >
+              <a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">Privacy Policy</a>
             </label>
           </div>
-          <div
-            *ngIf="
-              registerForm.get('acceptedTerms')?.invalid &&
-              registerForm.get('acceptedTerms')?.touched
-            "
-            class="text-red-500 text-sm"
-          >
-            <span *ngIf="registerForm.get('acceptedTerms')?.errors?.['required']"
-              >You must accept the terms and conditions</span
-            >
+          @if (termsError) {
+          <div class="text-red-500 text-sm">
+            <span>{{ termsError }}</span>
           </div>
-        </div>
-
-        <!-- Error Messages -->
-        <div *ngIf="errorMessage" class="bg-red-50 border border-red-200 rounded-lg p-3">
-          <p class="text-red-700 text-sm">{{ errorMessage }}</p>
-        </div>
-
-        <!-- Success Messages -->
-        <div *ngIf="successMessage" class="bg-green-50 border border-green-200 rounded-lg p-3">
-          <p class="text-green-700 text-sm">{{ successMessage }}</p>
+          }
         </div>
 
         <!-- Submit Button -->
-        <button
-          type="submit"
-          [disabled]="registerForm.invalid || isLoading"
-          class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          <span *ngIf="!isLoading">Create account</span>
-          <div *ngIf="isLoading" class="flex items-center">
-            <svg
-              class="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
+        <button type="submit" [disabled]="registerForm.invalid || isLoading()"
+          class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          @if (!isLoading()) {
+          <span>Create account</span>
+          } @else {
+          <div class="flex items-center">
+            <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
             </svg>
             Creating account...
           </div>
+          }
         </button>
 
         <!-- Login Link -->
         <div class="text-center">
           <p class="text-sm text-gray-600">
             Already have an account?
-            <a
-              routerLink="/login"
-              class="font-medium text-blue-600 hover:text-blue-800 hover:underline"
-            >
-              Sign in
-            </a>
+
           </p>
         </div>
       </form>
